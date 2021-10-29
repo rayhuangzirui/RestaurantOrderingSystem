@@ -1,27 +1,33 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // Represents an order having an order number, a list of items ordered, the total price of the items
 // and if the order is paid or not
-public class Order {
-    private static int nextOrderNum = 1;
-    private int orderNum;
-    ArrayList<Item> itemArrayList;
+public class Order implements Writable {
+    private String nameOnOrder;
+    private List<Item> itemList;
     private double totalPrice;
     private boolean isPaid;
 
-    // REQUIRES: orderNum is a positive number
-    // EFFECTS: the orderNum increment by 1 as the nextOrderNum increment;
+    // MODIFIES: this
+    // EFFECTS: create the name of the order
     //          create a new empty item list
-    public Order() {
-        itemArrayList = new ArrayList<>();
+    public Order(String nameOnOrder) {
+        itemList = new ArrayList<>();
+        this.nameOnOrder = nameOnOrder;
     }
 
     // EFFECTS: return to order number
-    public int getOrderNum() {
-        orderNum = nextOrderNum++;
-        return orderNum;
+    public String getOrderName() {
+//        orderNum = nextOrderNum++;
+        return nameOnOrder;
     }
 
     // REQUIRES: The item list is not empty, the index of item is smaller or equal to the item list size;
@@ -33,24 +39,34 @@ public class Order {
             return null;
         }
 
-        return itemArrayList.get(itemIndex).getItemName();
+        return itemList.get(itemIndex).getItemName();
+    }
+
+    // EFFECTS: returns an unmodifiable list of items in this order
+    public List<Item> getItemList() {
+        return Collections.unmodifiableList(itemList);
     }
 
     // MODIFIES: this
     // EFFECTS: add an item to the item list, the item can be repeated;
     public void addItem(Item item) {
-        itemArrayList.add(item);
+        itemList.add(item);
     }
 
     // MODIFIES: this
     // EFFECTS: remove an item from the list
     public void removeItem(Item item) {
-        itemArrayList.remove(item);
+        itemList.remove(item);
     }
 
     // EFFECTS: if the item list is empty, return true, false otherwise;
     public boolean isEmpty() {
-        return itemArrayList.isEmpty();
+        return itemList.isEmpty();
+    }
+
+    // EFFECTS: returns number of thingies in this workroom
+    public int numItems() {
+        return itemList.size();
     }
 
     // REQUIRES: the total price should not be negative
@@ -59,8 +75,8 @@ public class Order {
     //          return the total price
     public double totalPrice() {
         totalPrice = 0.0;
-        if (!itemArrayList.isEmpty()) {
-            for (Item e : itemArrayList) {
+        if (!itemList.isEmpty()) {
+            for (Item e : itemList) {
                 totalPrice = totalPrice + e.getPrice();
             }
         }
@@ -71,7 +87,7 @@ public class Order {
     public void makeAPayment() {
         isPaid = true;
         totalPrice = 0.0;
-        itemArrayList.clear();
+        itemList.clear();
     }
 
     // EFFECTS: return the payment status
@@ -86,7 +102,7 @@ public class Order {
         if (!isEmpty()) {
             isPaid = false;
             totalPrice = 0.0;
-            itemArrayList.clear();
+            itemList.clear();
         }
     }
 
@@ -94,9 +110,31 @@ public class Order {
     @Override
     public String toString() {
         String totalPriceStr = String.format("%.2f", totalPrice);
-        return "[orderNum = " + orderNum
-                + ", itemArrayList = " + itemArrayList
+        return "[orderName = " + nameOnOrder
+                + ", itemList = " + itemList
                 + ", totalPrice = $" + totalPriceStr
                 + ", isPaid = " + isPaid + ']';
+    }
+
+    // Code source from: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("orderName", nameOnOrder);
+        json.put("totalPrice", totalPrice);
+        json.put("Items", itemsToJson());
+        return json;
+    }
+
+    // Code source from: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+    // EFFECTS: returns things in this order as a JSON array
+    private JSONArray itemsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Item i : itemList) {
+            jsonArray.put(i.toJson());
+        }
+
+        return jsonArray;
     }
 }

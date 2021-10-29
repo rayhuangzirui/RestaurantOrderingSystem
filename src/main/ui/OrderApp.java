@@ -3,21 +3,33 @@ package ui;
 
 import model.Item;
 import model.Order;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 //Restaurant ordering application
 public class OrderApp {
+    private static final String JSON_STORE = "./data/order.json";
     private Order order;
     private Scanner input;
+    private String name;
     private Item coke;
     private Item juice;
     private Item chickenWing;
-    private Item fries;
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: run the ordering application
-    public OrderApp() {
+    public OrderApp() throws FileNotFoundException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runOrderApp();
+
     }
 
     // MODIFIES: this
@@ -26,6 +38,9 @@ public class OrderApp {
         boolean keepGoing = true;
         String command;
         init();
+        System.out.println("Enter name on order:");
+        name = input.next();
+        order = new Order(name);
 
         while (keepGoing) {
             displayMenu();
@@ -52,18 +67,20 @@ public class OrderApp {
             addItem("w");
         } else if (command.equals("aj")) {
             addItem("j");
-        } else if (command.equals("af")) {
-            addItem("f");
         } else if (command.equals("rc")) {
             removeItem("c");
         } else if (command.equals("rw")) {
             removeItem("w");
         } else if (command.equals("rj")) {
             removeItem("j");
-        } else if (command.equals("rf")) {
-            removeItem("f");
         } else if (command.equals("p")) {
             makeAPayment();
+        } else if (command.equals("vo")) {
+            printOrder();
+        } else if (command.equals("s")) {
+            saveOrder();
+        } else if (command.equals("l")) {
+            loadOrder();
         } else {
             System.out.println("Invalid input...");
         }
@@ -71,22 +88,18 @@ public class OrderApp {
 
     // EFFECTS: initialize items and order
     private void init() {
-        order = new Order();
-
         coke = new Item("coke");
         juice = new Item("juice");
         chickenWing = new Item("chicken wings");
-        fries = new Item("fries");
 
         coke.setPrice(3.0);
         juice.setPrice(4.0);
         chickenWing.setPrice(10.0);
-        fries.setPrice(5.0);
+
 
         coke.setDescription("This is coke");
         juice.setDescription("This is juice");
         chickenWing.setDescription("This is chicken wings");
-        fries.setDescription("This is fries");
 
         input = new Scanner(System.in);
         input.useDelimiter("\n");
@@ -98,12 +111,13 @@ public class OrderApp {
         System.out.println("\tac -> add coke");
         System.out.println("\taw -> add chicken wings");
         System.out.println("\taj -> add juice");
-        System.out.println("\taf -> add fries");
         System.out.println("\trc -> remove coke");
         System.out.println("\trw -> remove chicken wings");
         System.out.println("\trj -> remove juice");
-        System.out.println("\trf -> remove fries");
+        System.out.println("\tvo -> view my order");
         System.out.println("\tp -> make a payment");
+        System.out.println("\ts -> save order to file");
+        System.out.println("\tl -> load order from file");
         System.out.println("\tq -> quit");
     }
 
@@ -118,9 +132,6 @@ public class OrderApp {
         } else if (command.equals("j")) {
             order.addItem(juice);
             System.out.println("Successfully added " + juice.getItemName());
-        } else if (command.equals("f")) {
-            order.addItem(fries);
-            System.out.println("Successfully added " + fries.getItemName());
         }
     }
 
@@ -135,9 +146,6 @@ public class OrderApp {
         } else if (command.equals("j")) {
             order.removeItem(juice);
             System.out.println("Successfully removed " + juice.getItemName());
-        } else if (command.equals("f")) {
-            order.removeItem(fries);
-            System.out.println("Successfully removed " + fries.getItemName());
         }
     }
 
@@ -155,5 +163,43 @@ public class OrderApp {
     private void cancelOrder() {
         order.cancelOrder();
         System.out.println("The order has been cancelled!");
+    }
+
+    // EFFECTS: prints all the thingies in order to the console
+    private void printOrder() {
+        System.out.println("Order: " + order.getOrderName());
+        List<Item> items = order.getItemList();
+
+        for (Item i : items) {
+            System.out.println(i);
+        }
+
+        System.out.println("Total price: $" + order.totalPrice());
+        System.out.println("Payment status: " + order.isPaid());
+    }
+
+    // Code source from: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+    // EFFECTS: saves the order to file
+    private void saveOrder() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(order);
+            jsonWriter.close();
+            System.out.println("Saved order#" + order.getOrderName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // Code source from: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadOrder() {
+        try {
+            order = jsonReader.read();
+            System.out.println("Loaded order#" + order.getOrderName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
     }
 }

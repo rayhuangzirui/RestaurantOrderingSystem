@@ -10,19 +10,19 @@ class OrderTest {
 
     @BeforeEach
     void runBefore() {
-        testOrder = new Order();
+        testOrder = new Order("someone's order");
     }
 
     @Test
     void testConstructor() {
-        assertEquals(1, testOrder.getOrderNum());
+        assertEquals("someone's order", testOrder.getOrderName());
         assertTrue(testOrder.isEmpty());
 
         // create more orders objects to see if the order number increase by 1
-        Order order = new Order();
-        assertEquals(2, order.getOrderNum());
-        Order order1 = new Order();
-        assertEquals(3, order1.getOrderNum());
+        Order order = new Order("Jacky's order");
+        assertEquals("Jacky's order", order.getOrderName());
+        Order order1 = new Order("May's order");
+        assertEquals("May's order", order1.getOrderName());
     }
 
     @Test
@@ -147,6 +147,6 @@ class OrderTest {
 
     @Test
     void testToString() {
-        assertTrue(testOrder.toString().contains("[orderNum = 0, itemArrayList = [], totalPrice = $0.00, isPaid = false]"));
+        assertTrue(testOrder.toString().contains("[orderName = someone's order, itemList = [], totalPrice = $0.00, isPaid = false]"));
     }
 }

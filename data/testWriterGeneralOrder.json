@@ -1,0 +1,14 @@
+{
+    "totalPrice": 0,
+    "Items": [
+        {
+            "price": 0,
+            "name": "coke"
+        },
+        {
+            "price": 0,
+            "name": "chicken wing"
+        }
+    ],
+    "orderName": "My order"
+}

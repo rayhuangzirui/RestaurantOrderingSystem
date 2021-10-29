@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents an item having a name, price, and description
-public class Item {
+public class Item implements Writable {
     private String itemName;
     private double price;
     private String description;
@@ -38,4 +41,14 @@ public class Item {
         return "[itemName = " + itemName + ", price = $" + priceStr + ", description = " + description + ']';
     }
 
+    // Code source from: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", itemName);
+        json.put("price", price);
+        json.put("description", description);
+        return json;
+
+    }
 }
