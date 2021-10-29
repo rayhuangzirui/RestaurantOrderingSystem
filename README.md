@@ -28,3 +28,5 @@ Now, by learning this course, I am glad that I have an opportunity to implement 
 - As a user, I want to be able to **select** an *order* and **view** all *items* of the *order*
 - As a user, I want to be able to **select** an *order* and **view** the *payment status*, including the *price* of each *item*, *total price*, *payment method*, 
 and whether the customer paid the bill. 
+- As a user, I want to be able to **save** an *order* to file.
+- As a user, I want to be able to **load** the *order* from file.
