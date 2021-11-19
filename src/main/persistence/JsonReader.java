@@ -45,7 +45,7 @@ public class JsonReader {
     private Order parseOrder(JSONObject jsonObject) {
         String name = jsonObject.getString("orderName");
         Order order = new Order(name);
-
+        //stub
         addItems(order, jsonObject);
         return order;
     }

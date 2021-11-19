@@ -34,7 +34,7 @@ public class OrderApp {
 
     // MODIFIES: this
     // EFFECTS: processes user input
-    private void runOrderApp() {
+    public void runOrderApp() {
         boolean keepGoing = true;
         String command;
         init();
@@ -60,7 +60,7 @@ public class OrderApp {
 
     // MODIFIES: this
     // EFFECTS: processes user command
-    private void processCommand(String command) {
+    public void processCommand(String command) {
         if (command.equals("ac")) {
             addItem("c");
         } else if (command.equals("aw")) {
@@ -87,7 +87,7 @@ public class OrderApp {
     }
 
     // EFFECTS: initialize items and order
-    private void init() {
+    public void init() {
         coke = new Item("coke");
         juice = new Item("juice");
         chickenWing = new Item("chicken wings");
@@ -106,7 +106,7 @@ public class OrderApp {
     }
 
     // EFFECTS: displays menu of options to user
-    private void displayMenu() {
+    public void displayMenu() {
         System.out.println("\n Select items from:");
         System.out.println("\tac -> add coke");
         System.out.println("\taw -> add chicken wings");
@@ -122,7 +122,7 @@ public class OrderApp {
     }
 
     // EFFECTS: add items to the order
-    private void addItem(String command) {
+    public void addItem(String command) {
         if (command.equals("c")) {
             order.addItem(coke);
             System.out.println("Successfully added " + coke.getItemName());
@@ -136,7 +136,7 @@ public class OrderApp {
     }
 
     // EFFECTS: remove item by name
-    private void removeItem(String command) {
+    public void removeItem(String command) {
         if (command.equals("c")) {
             order.removeItem(coke);
             System.out.println("Successfully removed " + coke.getItemName());
@@ -150,7 +150,7 @@ public class OrderApp {
     }
 
     // EFFECTS: pay the total price of the order
-    private void makeAPayment() {
+    public void makeAPayment() {
         if (order.totalPrice() == 0.0) {
             System.out.println("Add items first!");
         } else {
@@ -160,13 +160,13 @@ public class OrderApp {
     }
 
     // EFFECTS: cancel the order, clear all items and prices
-    private void cancelOrder() {
+    public void cancelOrder() {
         order.cancelOrder();
         System.out.println("The order has been cancelled!");
     }
 
     // EFFECTS: prints all the thingies in order to the console
-    private void printOrder() {
+    public void printOrder() {
         System.out.println("Order: " + order.getOrderName());
         List<Item> items = order.getItemList();
 
@@ -178,9 +178,10 @@ public class OrderApp {
         System.out.println("Payment status: " + order.isPaid());
     }
 
+
     // Code source from: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // EFFECTS: saves the order to file
-    private void saveOrder() {
+    public void saveOrder() {
         try {
             jsonWriter.open();
             jsonWriter.write(order);
@@ -194,7 +195,7 @@ public class OrderApp {
     // Code source from: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
     // MODIFIES: this
     // EFFECTS: loads workroom from file
-    private void loadOrder() {
+    public void loadOrder() {
         try {
             order = jsonReader.read();
             System.out.println("Loaded order#" + order.getOrderName() + " from " + JSON_STORE);

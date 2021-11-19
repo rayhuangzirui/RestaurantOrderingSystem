@@ -2,15 +2,22 @@
     "totalPrice": 0,
     "Items": [
         {
+            "price": 0,
+            "name": "coke"
+        },
+        {
+            "price": 0,
+            "name": "chicken wings"
+        },
+        {
+            "price": 0,
+            "name": "juice"
+        },
+        {
             "price": 3,
             "name": "coke",
             "description": "This is coke"
-        },
-        {
-            "price": 10,
-            "name": "chicken wings",
-            "description": "This is chicken wings"
         }
     ],
-    "orderName": "Ray's order"
+    "orderName": "Ray"
 }
