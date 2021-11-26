@@ -30,3 +30,19 @@ Now, by learning this course, I am glad that I have an opportunity to implement 
 and whether the customer paid the bill. 
 - As a user, I want to be able to **save** an *order* to file.
 - As a user, I want to be able to **load** the *order* from file.
+
+### Phase 4: Task 2
+Fri Nov 26 13:21:41 PST 2021
+Added an order named Ray to order list
+
+Fri Nov 26 13:22:45 PST 2021
+Added item: Chicken Wing to the order.
+
+Fri Nov 26 13:23:01 PST 2021
+Added item: Juice to the order.
+
+Fri Nov 26 13:23:37 PST 2021
+Removed item:  Chicken Wing from the order.
+
+Fri Nov 26 13:23:39 PST 2021
+Removed item:  Juice from the order.

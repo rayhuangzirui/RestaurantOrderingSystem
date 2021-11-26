@@ -1,6 +1,8 @@
 package ui;
 
 
+import model.Event;
+import model.EventLog;
 import model.Item;
 import model.Order;
 import persistence.JsonReader;
@@ -203,4 +205,5 @@ public class OrderApp {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
+
 }
