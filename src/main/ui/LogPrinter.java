@@ -3,6 +3,7 @@ package ui;
 import model.EventLog;
 import model.exception.LogException;
 
+// Source from: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
 /**
  * Defines behaviours that event log printers must support.
  */

@@ -173,13 +173,6 @@ public class Frame implements LogPrinter {
         panel5.add(new JLabel(orderDetail()));
     }
 
-    // EFFECTS: set a panel to print event log
-//    public void setPanel6() {
-//        LogPrinter lp;
-//
-//        printLog(EventLog.getInstance());
-//        panel6.add(logArea);
-//    }
 
     // MODIFIES: this, e
     // EFFECTS: an action listener for the button named "add an order". Click this button,
@@ -315,6 +308,7 @@ public class Frame implements LogPrinter {
         }
     }
 
+    // Source from: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
     // EFFECTS: an action listener for the button named "Quit". Click this button, goes to panel 6
     private void setQuitListener(ActionEvent e) throws LogException {
         String command = e.getActionCommand();

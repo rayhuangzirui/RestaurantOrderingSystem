@@ -1,8 +1,6 @@
 package ui;
 
 
-import model.Event;
-import model.EventLog;
 import model.Item;
 import model.Order;
 import persistence.JsonReader;

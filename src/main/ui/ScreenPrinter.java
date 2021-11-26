@@ -8,6 +8,7 @@ import model.exception.LogException;
 import javax.swing.*;
 import java.awt.*;
 
+// Source from: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
 /**
  * Represents a screen printer for printing event log to screen.
  */

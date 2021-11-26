@@ -1,5 +1,6 @@
 package model.exception;
 
+// Source from: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem
 /**
  * Represents the exception that can occur when
  * printing the event log.
