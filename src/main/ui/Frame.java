@@ -60,7 +60,6 @@ public class Frame implements LogPrinter {
     private JTable orderTable = new JTable();
     private JScrollPane pane = new JScrollPane(orderTable);
     private JTextArea logArea;
-    private static final String FILE_DESCRIPTOR = "...file";
 
 
     private JButton quit = new JButton("Quit");

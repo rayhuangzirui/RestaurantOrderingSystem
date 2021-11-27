@@ -14,9 +14,13 @@
             "name": "juice"
         },
         {
-            "price": 3,
-            "name": "coke",
-            "description": "This is coke"
+            "price": 0,
+            "name": "coke"
+        },
+        {
+            "price": 4,
+            "name": "juice",
+            "description": "This is juice"
         }
     ],
     "orderName": "Ray"
